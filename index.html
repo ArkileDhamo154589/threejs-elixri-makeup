@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ombre Lips — Glossy Lip Balm · 3D Viewer | Elixir Make-Up</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Baloo+2:wght@800&display=swap" rel="stylesheet">
+<style>
+  /* the brand's real typeface — same as elixirmakeup.gr */
+  @font-face{
+    font-family:'CFAsty';
+    src:url('CFAsty-Regular.woff2') format('woff2');
+    font-weight:400;font-display:swap;
+  }
+  @font-face{
+    font-family:'CFAsty';
+    src:url('CFAsty-Bold.woff2') format('woff2');
+    font-weight:700;font-display:swap;
+  }
+  :root{
+    --cream:#f4efe9;
+    --cream-deep:#ece4da;
+    --ink:#2b1510;
+    --ink-soft:rgba(43,21,16,.55);
+    --accent:#e29a7c;          /* shade base — animated per variant */
+    --accent-deep:#45160f;     /* shade stripe — animated per variant */
+    --hair:rgba(43,21,16,.14);
+    transition:--accent .6s, --accent-deep .6s;
+  }
+  @property --accent{syntax:'<color>';inherits:true;initial-value:#e29a7c;}
+  @property --accent-deep{syntax:'<color>';inherits:true;initial-value:#45160f;}
+
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    font-family:'Instrument Sans',sans-serif;
+    background:
+      radial-gradient(120% 90% at 78% 30%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 60%),
+      linear-gradient(180deg, var(--cream) 0%, var(--cream-deep) 100%);
+    color:var(--ink);
+    overflow:hidden;
+    transition:background .8s ease;
+  }
+  /* film grain */
+  body::after{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:40;opacity:.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  header{
+    position:fixed;inset:0 0 auto 0;z-index:30;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:22px clamp(20px,4vw,56px);
+  }
+  .brandlogo{height:28px;width:auto;display:block}
+  .hright{display:flex;align-items:center;gap:12px}
+  .music-btn{
+    width:38px;height:38px;border-radius:50%;cursor:pointer;
+    border:1px solid var(--hair);background:transparent;color:var(--ink);
+    font-size:16px;line-height:1;display:grid;place-items:center;
+    transition:background .3s,color .3s,transform .3s;
+  }
+  .music-btn:hover{transform:scale(1.1)}
+  .music-btn.playing{background:var(--ink);color:var(--cream);animation:beat 1.75s ease-in-out infinite}
+  @keyframes beat{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--accent-deep) 45%, transparent)}
+    50%{box-shadow:0 0 0 9px transparent}}
+  .badge{
+    font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-soft);
+    border:1px solid var(--hair);border-radius:999px;padding:8px 16px;
+    backdrop-filter:blur(4px);
+  }
+  .badge b{color:var(--accent-deep);font-weight:600}
+
+  main{
+    height:100dvh;display:grid;
+    grid-template-columns:minmax(340px,44%) 1fr;
+    align-items:stretch;
+  }
+
+  /* ——— left: editorial info ——— */
+  .info{
+    display:flex;flex-direction:column;justify-content:center;gap:26px;
+    padding:96px clamp(20px,4vw,56px) 48px;
+    position:relative;z-index:20;
+  }
+  .eyebrow{
+    font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--ink-soft);
+    display:flex;align-items:center;gap:14px;
+  }
+  .eyebrow::before{content:"";width:34px;height:1px;background:var(--accent-deep);transition:background .6s}
+  h1{
+    font-family:'CFAsty','Instrument Sans',sans-serif;font-weight:400;
+    font-size:clamp(42px,5.2vw,78px);line-height:1.0;letter-spacing:-.01em;
+  }
+  h1 em{
+    font-style:normal;font-weight:700;display:block;
+    color:var(--accent-deep);transition:color .6s;
+  }
+  .shade-line{
+    display:flex;align-items:baseline;gap:16px;border-top:1px solid var(--hair);
+    padding-top:20px;
+  }
+  .shade-no{
+    font-family:'CFAsty',sans-serif;font-weight:700;
+    font-size:30px;color:var(--accent-deep);transition:color .6s;min-width:74px;
+  }
+  .shade-name{font-size:13px;letter-spacing:.18em;text-transform:uppercase}
+  .shade-name span{display:block;margin-top:5px;font-size:11px;letter-spacing:.08em;
+    text-transform:none;color:var(--ink-soft)}
+  .desc{max-width:42ch;font-size:14px;line-height:1.65;color:var(--ink-soft)}
+
+  .swatches{display:flex;gap:14px;margin-top:4px}
+  .swatch{
+    --c1:#e29a7c;--c2:#45160f;
+    width:52px;height:52px;border-radius:50%;cursor:pointer;border:none;
+    background:repeating-linear-gradient(-32deg,var(--c1) 0 7px,var(--c2) 7px 11px,var(--c1) 11px 19px,var(--c2) 19px 22px);
+    outline:2px solid transparent;outline-offset:4px;
+    transition:transform .35s cubic-bezier(.34,1.56,.64,1),outline-color .25s;
+    position:relative;
+  }
+  .swatch:hover{transform:scale(1.12) rotate(8deg)}
+  .swatch[aria-pressed="true"]{outline-color:var(--ink);transform:scale(1.08)}
+  .swatch i{
+    position:absolute;inset:auto auto -22px 50%;translate:-50% 0;
+    font-style:normal;font-size:10px;letter-spacing:.2em;color:var(--ink-soft);
+    opacity:0;transition:opacity .25s;
+  }
+  .swatch:hover i,.swatch[aria-pressed="true"] i{opacity:1}
+
+  .cta-row{display:flex;align-items:center;gap:22px;margin-top:14px}
+  .cta{
+    display:inline-flex;align-items:center;gap:12px;text-decoration:none;
+    background:var(--ink);color:var(--cream);font-size:12px;font-weight:600;
+    letter-spacing:.22em;text-transform:uppercase;
+    padding:17px 30px;border-radius:999px;
+    transition:gap .3s,background .6s;
+  }
+  .cta:hover{gap:20px;background:var(--accent-deep)}
+  .hint{font-size:11px;letter-spacing:.14em;color:var(--ink-soft);text-transform:uppercase}
+
+  /* ——— right: 3D stage ——— */
+  .stage{position:relative;min-height:0}
+  .stage canvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab}
+  .stage canvas:active{cursor:grabbing}
+  .numeral{
+    position:absolute;top:50%;left:54%;translate:-50% -54%;
+    font-family:'CFAsty',sans-serif;font-weight:700;
+    font-size:clamp(280px,38vw,560px);line-height:1;
+    color:color-mix(in srgb, var(--accent) 38%, transparent);
+    transition:color .6s;
+    user-select:none;pointer-events:none;z-index:0;
+    letter-spacing:-.06em;
+  }
+  .numeral::after{
+    content:attr(data-word);
+    position:absolute;top:-12px;right:-10px;
+    font-size:12px;letter-spacing:.5em;font-style:normal;font-weight:400;
+    font-family:'Instrument Sans',sans-serif;text-transform:uppercase;
+    color:var(--ink-soft);writing-mode:vertical-rl;
+  }
+  #gl{position:absolute;inset:0;z-index:1}
+
+  /* real texture photo — round chip on the stage */
+  .texture-chip{
+    position:absolute;left:clamp(16px,3vw,44px);bottom:clamp(18px,4vh,44px);z-index:10;
+    display:flex;flex-direction:column;align-items:center;gap:10px;
+  }
+  .texture-chip .ring{
+    width:clamp(86px,9vw,124px);height:clamp(86px,9vw,124px);
+    border-radius:50%;
+    /* the photo is a dollop centred on a light bg — zoom into it */
+    background-color:var(--cream-deep);
+    background-size:235%;background-position:center;background-repeat:no-repeat;
+    box-shadow:0 14px 34px rgba(43,21,16,.18), 0 0 0 1px var(--hair);
+    transition:opacity .35s ease, transform .4s cubic-bezier(.34,1.56,.64,1);
+  }
+  .texture-chip:hover .ring{transform:scale(1.55) rotate(7deg)}
+  .texture-chip.swapping .ring{opacity:0}
+  .texture-chip figcaption{
+    font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:var(--ink-soft);
+  }
+
+  .loader{
+    position:absolute;inset:0;display:grid;place-items:center;z-index:5;
+    font-family:'CFAsty',sans-serif;font-size:20px;color:var(--ink-soft);
+    transition:opacity .5s;letter-spacing:.04em;
+  }
+  .loader.done{opacity:0;pointer-events:none}
+
+  /* ——— minimal begin screen (audio needs one gesture) ——— */
+  .begin{
+    position:fixed;inset:0;z-index:70;
+    background:#0e0b0a;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:38px;text-align:center;padding:24px;
+    transition:opacity 1s ease, visibility 1s;
+  }
+  .begin.off{opacity:0;visibility:hidden}
+  .begin .blogo{
+    width:clamp(200px,26vw,340px);height:auto;
+    filter:invert(1) brightness(1.15);
+    opacity:0;animation:rise 1.4s .2s cubic-bezier(.2,.7,.2,1) forwards;
+  }
+  .begin-btn{
+    cursor:pointer;background:transparent;
+    border:1px solid rgba(243,233,223,.45);color:#f3e9df;
+    font-family:'Instrument Sans',sans-serif;
+    font-size:12px;font-weight:600;letter-spacing:.34em;text-transform:uppercase;
+    padding:18px 46px;border-radius:999px;
+    opacity:0;animation:rise 1.4s .6s cubic-bezier(.2,.7,.2,1) forwards;
+    transition:background .4s,color .4s,border-color .4s;
+  }
+  .begin-btn:hover:not(:disabled){background:#f3e9df;color:#0e0b0a;border-color:#f3e9df}
+  .begin-btn:disabled{cursor:wait;opacity:.4;animation:rise 1.4s .6s cubic-bezier(.2,.7,.2,1) forwards}
+  .begin .bnote{
+    font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:rgba(243,233,223,.4);
+    opacity:0;animation:rise 1.4s .8s cubic-bezier(.2,.7,.2,1) forwards;
+  }
+
+  /* ——— cinema mode: dark stage, full-bleed canvas, UI hidden ——— */
+  body.cinema{
+    background:#0e0b0a;
+  }
+  body.cinema header, body.cinema .info, body.cinema .numeral,
+  body.cinema .texture-chip, body.cinema .loader{
+    opacity:0 !important;pointer-events:none;transition:opacity .6s;
+  }
+  body.cinema .stage{position:fixed;inset:0;z-index:45}
+
+  /* entrance choreography — fires when the cinema hands over (.revealed),
+     same rise/easing language as the 3D intro */
+  .info > *{opacity:0;translate:0 22px}
+  .numeral{opacity:0}
+  .texture-chip{opacity:0}
+  body.revealed .info > *{animation:rise .9s cubic-bezier(.2,.7,.2,1) forwards}
+  body.revealed .info > *:nth-child(1){animation-delay:.15s}
+  body.revealed .info > *:nth-child(2){animation-delay:.25s}
+  body.revealed .info > *:nth-child(3){animation-delay:.37s}
+  body.revealed .info > *:nth-child(4){animation-delay:.47s}
+  body.revealed .info > *:nth-child(5){animation-delay:.57s}
+  body.revealed .info > *:nth-child(6){animation-delay:.67s}
+  body.revealed .numeral{animation:fadein 1.2s .45s ease forwards}
+  body.revealed .texture-chip{animation:fadein 1s .8s ease forwards}
+  @keyframes rise{to{opacity:1;translate:0 0}}
+  @keyframes fadein{to{opacity:1}}
+
+  @media (max-width:880px){
+    body{overflow:auto}
+    main{grid-template-columns:1fr;grid-template-rows:64dvh auto;height:auto}
+    .stage{order:-1;height:64dvh}
+    .info{padding:8px 24px 64px;justify-content:flex-start}
+    .numeral{font-size:min(60vw,320px)}
+    h1{font-size:clamp(40px,11vw,64px)}
+  }
+</style>
+</head>
+<body>
+
+<div class="begin" id="begin">
+  <img class="blogo" src="elixir-logo.png" alt="Elixir Make-Up">
+  <button class="begin-btn" id="beginBtn" type="button" disabled>Loading…</button>
+  <p class="bnote">with sound · με ήχο</p>
+</div>
+
+<header>
+  <img class="brandlogo" src="elixir-logo.png" alt="Elixir Make-Up">
+  <div class="hright">
+    <div class="badge">Ombre Collection · <b>3D</b></div>
+    <button class="music-btn" id="musicBtn" aria-label="Μουσική on/off" aria-pressed="false">♪</button>
+  </div>
+</header>
+
+<main>
+  <section class="info">
+    <p class="eyebrow">Ombre Lips · Marble Lip Balm</p>
+    <h1>Glossy <em>Lip Balm</em></h1>
+
+    <div class="shade-line">
+      <span class="shade-no" id="shadeNo">#01</span>
+      <span class="shade-name" id="shadeName">Peach × Dark Cocoa
+        <span id="shadeDesc">Juicy peach swirled with bitter cocoa</span></span>
+    </div>
+
+    <p class="desc">A two-tone marbled balm that melts into a glossy, cushiony veil.
+      Each tube is swirled — no two are quite the same. Drag to spin it around,
+      scroll to zoom in on the swirl.</p>
+
+    <div class="swatches" id="swatches" role="group" aria-label="Shades"></div>
+
+    <div class="cta-row">
+      <a class="cta" id="pdpLink" href="#" target="_blank" rel="noopener">View product <span>→</span></a>
+      <span class="hint">drag · zoom · spin</span>
+    </div>
+  </section>
+
+  <section class="stage">
+    <div class="numeral" id="numeral" data-word="Ombre">01</div>
+    <div id="gl"></div>
+    <figure class="texture-chip" id="texChip">
+      <div class="ring" id="texRing" role="img" aria-label="Πραγματική υφή της απόχρωσης"></div>
+      <figcaption>Texture</figcaption>
+    </figure>
+    <div class="loader" id="loader">pouring the swirl…</div>
+  </section>
+</main>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.184.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.184.0/examples/jsm/"
+  }
+}
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { FontLoader } from 'three/addons/loaders/FontLoader.js';
+import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
+
+/* ————————————————— shades ————————————————— */
+const CDN = 'https://spcdn.shortpixel.ai/spio/ret_img,q_cdnize,to_auto,s_webp:avif/elixirmakeup.gr/wp-content/uploads/2026/05/';
+const SHADES = [
+  { no:'01', name:'Peach × Dark Cocoa',  desc:'Juicy peach swirled with bitter cocoa',
+    base:'#e29a7c', stripe:'#45160f', seed:7,  photo:CDN+'Ombre-1i-800x800.jpg',
+    url:'https://elixirmakeup.gr/shop/cheili/marble-lip-balm/ombre-glossy-balm/ombre-lips-glossy-lip-balm-01/' },
+  { no:'02', name:'Cherry × Caramel',    desc:'Deep cherry red laced with warm caramel',
+    base:'#8e2018', stripe:'#a06a4b', seed:13, photo:CDN+'Ombre-2i-800x800.jpg',
+    url:'https://elixirmakeup.gr/shop/cheili/marble-lip-balm/ombre-glossy-balm/ombre-lips-glossy-lip-balm-02/' },
+  { no:'03', name:'Mocha × Cream',       desc:'Milky mocha folded with soft cream',
+    base:'#8a4f38', stripe:'#d8a78e', seed:23, photo:CDN+'Ombre-4i-800x800.jpg',
+    url:'https://elixirmakeup.gr/shop/cheili/marble-lip-balm/ombre-glossy-balm/ombre-lips-glossy-lip-balm-03/' },
+  { no:'04', name:'Coral × Chestnut',    desc:'Light coral streaked with glossy chestnut',
+    base:'#e7ad92', stripe:'#7c2718', seed:31, photo:CDN+'Ombre-3i-800x800.jpg',
+    url:'https://elixirmakeup.gr/shop/cheili/marble-lip-balm/ombre-glossy-balm/ombre-lips-glossy-lip-balm-04/' },
+];
+SHADES.forEach(s => { const im = new Image(); im.src = s.photo; });   // preload texture photos
+
+/* ————————————————— renderer / scene ————————————————— */
+const mount = document.getElementById('gl');
+const renderer = new THREE.WebGLRenderer({ antialias:true, alpha:true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.05;
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFShadowMap;
+mount.appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();
+const pmrem = new THREE.PMREMGenerator(renderer);
+scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+scene.environmentIntensity = 0.9;
+
+const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 50);
+camera.position.set(0.7, 0.4, 9.2);
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.06;
+controls.minDistance = 4.6;
+controls.maxDistance = 11;
+controls.maxPolarAngle = Math.PI * 0.62;
+controls.minPolarAngle = Math.PI * 0.22;
+controls.autoRotate = true;
+controls.autoRotateSpeed = 1.6;
+controls.target.set(0, -0.05, 0);
+
+let idleTimer;
+controls.addEventListener('start', () => { controls.autoRotate = false; clearTimeout(idleTimer); });
+controls.addEventListener('end',   () => { idleTimer = setTimeout(() => controls.autoRotate = true, 3500); });
+
+/* key light for the soft studio shadow */
+const key = new THREE.DirectionalLight(0xfff2e6, 2.4);
+key.position.set(2.6, 5.5, 3.4);
+key.castShadow = true;
+key.shadow.mapSize.set(2048, 2048);
+key.shadow.camera.left = key.shadow.camera.bottom = -4;
+key.shadow.camera.right = key.shadow.camera.top = 4;
+key.shadow.radius = 9;
+key.shadow.bias = -0.0004;
+scene.add(key);
+scene.add(new THREE.AmbientLight(0xffe9da, 0.35));
+
+/* floor that only receives shadow */
+const floor = new THREE.Mesh(
+  new THREE.CircleGeometry(6, 48),
+  new THREE.ShadowMaterial({ opacity: 0.16 })
+);
+floor.rotation.x = -Math.PI / 2;
+floor.position.y = -1.80;
+floor.receiveShadow = true;
+scene.add(floor);
+
+/* ————————————————— procedural squeeze tube ————————————————— */
+/* proportions measured off the product photos: body ≈ 2.17× its width,
+   nearly straight walls, crimp ≈ body width, squat cap */
+const R = 0.46;                 // base radius at the cap end
+const BODY_Y0 = -0.95, BODY_Y1 = 1.05;
+
+function tubeBodyGeometry(radial = 128, rings = 96) {
+  const pos = [], uv = [], idx = [];
+  for (let j = 0; j <= rings; j++) {
+    const t = j / rings;                                   // 0 bottom → 1 top
+    const e = t * t * (3 - 2 * t);                         // smoothstep
+    const hw = R + 0.05 * e;                               // near-straight walls like the real tube
+    const hd = R * (1 - e) + 0.045 * e;                    // flattens toward crimp
+    const y = BODY_Y0 + (BODY_Y1 - BODY_Y0) * t;
+    for (let i = 0; i <= radial; i++) {
+      const th = -Math.PI + (i / radial) * Math.PI * 2;    // front at θ=0 → u=0.5
+      pos.push(hw * Math.sin(th), y, hd * Math.cos(th));
+      uv.push((th + Math.PI) / (Math.PI * 2), t);
+    }
+  }
+  const cols = radial + 1;
+  for (let j = 0; j < rings; j++)
+    for (let i = 0; i < radial; i++) {
+      const a = j * cols + i, b = a + cols;
+      idx.push(a, a + 1, b, a + 1, b + 1, b);   // CCW seen from outside
+    }
+  const g = new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+  g.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2));
+  g.setIndex(idx);
+  g.computeVertexNormals();
+  return g;
+}
+
+/* the real ELIXIR wordmark, recoloured white for the tube print */
+const logoCanvas = document.createElement('canvas');
+let logoReady = false;
+const logoImg = new Image();
+const logoLoaded = new Promise(res => {
+  logoImg.onload = () => {
+    logoCanvas.width = logoImg.width;
+    logoCanvas.height = logoImg.height;
+    const lx = logoCanvas.getContext('2d');
+    lx.drawImage(logoImg, 0, 0);
+    lx.globalCompositeOperation = 'source-in';
+    lx.fillStyle = '#ffffff';
+    lx.fillRect(0, 0, logoCanvas.width, logoCanvas.height);
+    logoReady = true;
+    res();
+  };
+  logoImg.src = 'elixir-logo.png';
+});
+
+/* canvas swirl texture, seam-safe (integer wave frequencies) */
+function swirlTexture({ base, stripe, seed }) {
+  const W = 1024, H = 1024;
+  const cv = document.createElement('canvas');
+  cv.width = W; cv.height = H;
+  const x = cv.getContext('2d');
+
+  let s = seed;
+  const rnd = () => (s = (s * 16807 + 11) % 2147483647) / 2147483647;
+
+  x.fillStyle = base;
+  x.fillRect(0, 0, W, H);
+
+  /* zebra bands — bold organic stripes like the real swirl
+     (integer wave frequencies keep the wrap seamless) */
+  x.fillStyle = stripe;
+  const bands = 7;
+  for (let b = 0; b < bands; b++) {
+    const yc   = H * (0.055 + 0.135 * b) + (rnd() - 0.5) * H * 0.035;
+    const amp  = H * (0.030 + 0.045 * rnd());
+    const f1   = 1 + Math.floor(rnd() * 2);
+    const f2   = 2 + Math.floor(rnd() * 3);
+    const f3   = 3 + Math.floor(rnd() * 3);
+    const p1   = rnd() * Math.PI * 2, p2 = rnd() * Math.PI * 2, p3 = rnd() * Math.PI * 2;
+    const thBase = H * (0.048 + 0.050 * rnd());            // much bolder
+    const fT   = 1 + Math.floor(rnd() * 2);
+    const pT   = rnd() * Math.PI * 2;
+    const edge = u => amp * Math.sin(f1 * u + p1)
+                    + amp * 0.55 * Math.sin(f2 * u + p2)
+                    + amp * 0.25 * Math.sin(f3 * u + p3);
+
+    x.beginPath();
+    for (let i = 0; i <= W; i += 8) {
+      const u = (i / W) * Math.PI * 2;
+      const y = yc + edge(u);
+      i === 0 ? x.moveTo(i, y) : x.lineTo(i, y);
+    }
+    for (let i = W; i >= 0; i -= 8) {
+      const u = (i / W) * Math.PI * 2;
+      const th = thBase * (0.25 + 0.75 * (0.5 + 0.5 * Math.sin(fT * u + pT)));   // taper to points
+      x.lineTo(i, yc + edge(u) + th);
+    }
+    x.closePath();
+    x.fill();
+  }
+
+  /* ——— branding (front face centres at u=0.5 → x=W/2) ——— */
+  const cx = W * 0.5;
+  x.textAlign = 'center';
+
+  /* real ELIXIR wordmark (includes the MAKE-UP line) */
+  if (logoReady) {
+    const lw = W * 0.30;
+    const lh = lw * (logoCanvas.height / logoCanvas.width);
+    x.drawImage(logoCanvas, cx - lw / 2, H * 0.125 - lh / 2, lw, lh);
+  }
+
+  /* OMBRE — hollow outline letters rotated CCW, exactly like the print:
+     reads bottom→top, double offset line, swirl shows through the glyphs */
+  const word = 'OMBRE';
+  const step = H * 0.082;
+  let ly = H * 0.585;
+  x.font = '800 96px "Baloo 2", sans-serif';   // rounded bubble glyphs like the print
+  x.textBaseline = 'middle';
+  x.lineJoin = 'round';
+  for (const ch of word) {                                 // 'O' lowest
+    x.save();
+    x.translate(cx, ly);
+    x.rotate(-Math.PI / 2);
+    x.strokeStyle = 'rgba(255,255,255,0.75)';              // offset echo line
+    x.lineWidth = 4;
+    x.strokeText(ch, 5, 5);
+    x.strokeStyle = '#ffffff';
+    x.lineWidth = 4.5;
+    x.strokeText(ch, 0, 0);
+    x.restore();
+    ly -= step;
+  }
+  x.textBaseline = 'alphabetic';
+  x.fillStyle = '#ffffff';
+
+  x.fillStyle = '#ffffff';
+  x.font = '600 34px "Instrument Sans", sans-serif';
+  x.save(); x.letterSpacing = '8px';
+  x.fillText('LIP BALM', cx, H * 0.705);
+  x.restore();
+
+  const tex = new THREE.CanvasTexture(cv);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+  tex.wrapS = THREE.RepeatWrapping;
+  return tex;
+}
+
+/* ribbed bump for the crimp seal */
+function ribTexture() {
+  const cv = document.createElement('canvas');
+  cv.width = 256; cv.height = 32;
+  const x = cv.getContext('2d');
+  for (let i = 0; i < 256; i += 8) {
+    const g = x.createLinearGradient(i, 0, i + 8, 0);
+    g.addColorStop(0, '#666'); g.addColorStop(0.5, '#fff'); g.addColorStop(1, '#666');
+    x.fillStyle = g; x.fillRect(i, 0, 8, 32);
+  }
+  const tex = new THREE.CanvasTexture(cv);
+  tex.wrapS = THREE.RepeatWrapping;
+  return tex;
+}
+
+const product = new THREE.Group();
+scene.add(product);
+
+/* body */
+const bodyMat = new THREE.MeshPhysicalMaterial({
+  roughness: 0.34, clearcoat: 1, clearcoatRoughness: 0.16, specularIntensity: 0.6,
+});
+const body = new THREE.Mesh(tubeBodyGeometry(), bodyMat);
+body.castShadow = true;
+product.add(body);
+
+/* crimp seal — flattened ribbed tab */
+const crimpMat = new THREE.MeshPhysicalMaterial({
+  color: 0xf2f0ec, roughness: 0.55,
+  bumpMap: ribTexture(), bumpScale: 0.6,
+});
+crimpMat.bumpMap.repeat.set(10, 1);
+const crimp = new THREE.Mesh(new THREE.BoxGeometry(1.02, 0.22, 0.085, 1, 1, 1), crimpMat);
+crimp.position.y = BODY_Y1 + 0.08;
+crimp.castShadow = true;
+product.add(crimp);
+
+/* cap — white cylinder, slightly waisted */
+const capMat = new THREE.MeshPhysicalMaterial({
+  color: 0xf4f2ee, roughness: 0.42, clearcoat: 0.5, clearcoatRoughness: 0.3,
+});
+const cap = new THREE.Mesh(new THREE.CylinderGeometry(0.43, 0.46, 0.82, 64), capMat);
+cap.position.y = BODY_Y0 - 0.33;
+cap.castShadow = true;
+product.add(cap);
+const capTop = new THREE.Mesh(new THREE.CylinderGeometry(0.46, 0.43, 0.06, 64), capMat);
+capTop.position.y = BODY_Y0 + 0.08;
+product.add(capTop);
+
+product.rotation.y = -0.35;
+
+/* ————————————————— particle swirl ————————————————— */
+const P_COUNT = 150;
+const pGeo = new THREE.SphereGeometry(0.045, 10, 10);
+const pMat = new THREE.MeshPhysicalMaterial({ roughness: 0.2, clearcoat: 1 });
+const particles = new THREE.InstancedMesh(pGeo, pMat, P_COUNT);
+particles.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+const pData = [];
+for (let i = 0; i < P_COUNT; i++) {
+  pData.push({
+    r: 1.4 + Math.random() * 2.4,
+    h: -1.7 + Math.random() * 3.6,
+    speed: (0.12 + Math.random() * 0.35) * (Math.random() < 0.5 ? 1 : -1),
+    phase: Math.random() * Math.PI * 2,
+    bob: 0.08 + Math.random() * 0.22,
+    scale: 0.4 + Math.random() * 1.5,
+  });
+}
+particles.instanceColor = new THREE.InstancedBufferAttribute(new Float32Array(P_COUNT * 3), 3);
+scene.add(particles);
+
+const _m = new THREE.Matrix4(), _q = new THREE.Quaternion(), _v = new THREE.Vector3(), _s = new THREE.Vector3();
+let burst = 0;                                   // shade-switch shockwave
+
+function paintParticles(shade) {
+  const cols = [new THREE.Color(shade.base), new THREE.Color(shade.stripe), new THREE.Color('#fff6ef')];
+  const c = new THREE.Color();
+  for (let i = 0; i < P_COUNT; i++) {
+    c.copy(cols[i % 3]).offsetHSL(0, 0, (Math.random() - 0.5) * 0.08);
+    particles.setColorAt(i, c);
+  }
+  particles.instanceColor.needsUpdate = true;
+}
+
+function updateParticles(t, beatPulse = 0) {
+  const spread = 1 + burst * 1.6;
+  for (let i = 0; i < P_COUNT; i++) {
+    const p = pData[i];
+    const a = p.phase + t * p.speed * (1 + burst * 5);
+    _v.set(Math.cos(a) * p.r * spread, p.h + Math.sin(t * 0.6 + p.phase) * p.bob, Math.sin(a) * p.r * spread);
+    const sc = 0.045 * p.scale * (1 + burst * 0.6 + beatPulse * 0.35);
+    _s.setScalar(sc / 0.045);
+    _m.compose(_v, _q, _s);
+    particles.setMatrixAt(i, _m);
+  }
+  particles.instanceMatrix.needsUpdate = true;
+  burst *= 0.94;
+}
+
+/* party disco lights — wake up with the music, pulse on the beat */
+const disco = [
+  { L: new THREE.PointLight(0xffd9ae, 0, 20), ph: 0.0 },   // champagne
+  { L: new THREE.PointLight(0xe8a3b6, 0, 20), ph: 2.1 },   // rosé
+  { L: new THREE.PointLight(0xfff3e6, 0, 20), ph: 4.2 },   // warm white
+];
+disco.forEach(d => scene.add(d.L));
+
+/* pointer parallax — the whole product leans toward the cursor */
+const tilt = { x: 0, z: 0 };
+addEventListener('pointermove', e => {
+  tilt.z = -((e.clientX / innerWidth) - 0.5) * 0.16;
+  tilt.x =  ((e.clientY / innerHeight) - 0.5) * 0.14;
+});
+
+/* ————————————————— variant switching ————————————————— */
+const root = document.documentElement.style;
+const elNo = document.getElementById('shadeNo');
+const elName = document.getElementById('shadeName');
+const elNum = document.getElementById('numeral');
+const elLink = document.getElementById('pdpLink');
+const swWrap = document.getElementById('swatches');
+
+const textures = SHADES.map(swirlTexture);   // pre-bake all four
+let active = -1, switching = false;
+
+function setShade(i, instant = false) {
+  if (i === active) return;
+  active = i;
+  const s = SHADES[i];
+
+  [...swWrap.children].forEach((b, j) => b.setAttribute('aria-pressed', j === i));
+  root.setProperty('--accent', s.base);
+  root.setProperty('--accent-deep', s.stripe);
+  elNo.textContent = '#' + s.no;
+  elName.childNodes[0].textContent = s.name;
+  document.getElementById('shadeDesc').textContent = s.desc;
+  elNum.textContent = s.no;
+  elLink.href = s.url;
+
+  /* texture photo chip */
+  const chip = document.getElementById('texChip');
+  const ring = document.getElementById('texRing');
+  if (instant) {
+    ring.style.backgroundImage = `url("${s.photo}")`;
+  } else {
+    chip.classList.add('swapping');
+    setTimeout(() => {
+      ring.style.backgroundImage = `url("${s.photo}")`;
+      chip.classList.remove('swapping');
+    }, 350);
+  }
+
+  if (instant) {
+    bodyMat.map = textures[i]; bodyMat.needsUpdate = true;
+    paintParticles(s);
+    return;
+  }
+
+  /* full-spin swap + particle shockwave */
+  switching = true;
+  burst = 1;
+  paintParticles(s);
+  const t0 = performance.now(), D = 760;
+  const rot0 = product.rotation.y;
+  const swapAt = 0.5;
+  let swapped = false;
+  (function anim(now) {
+    const k = Math.min(1, (now - t0) / D);
+    const e = k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;   // easeInOutCubic
+    const dip = Math.sin(k * Math.PI);                     // 0→1→0
+    product.scale.setScalar(1 - 0.16 * dip);
+    product.rotation.y = rot0 + e * Math.PI * 2;           // full 360° spin
+    product.position.y = -0.25 * dip;
+    if (!swapped && k >= swapAt) {
+      bodyMat.map = textures[i]; bodyMat.needsUpdate = true; swapped = true;
+    }
+    if (k < 1) requestAnimationFrame(anim);
+    else { product.scale.setScalar(1); product.rotation.y = rot0; switching = false; }
+  })(t0);
+}
+
+SHADES.forEach((s, i) => {
+  const b = document.createElement('button');
+  b.className = 'swatch';
+  b.style.setProperty('--c1', s.base);
+  b.style.setProperty('--c2', s.stripe);
+  b.setAttribute('aria-label', `Shade ${s.no} — ${s.name}`);
+  b.innerHTML = `<i>${s.no}</i>`;
+  b.addEventListener('click', () => setShade(i));
+  swWrap.appendChild(b);
+});
+
+/* fonts + logo must be ready before baking the print into the textures
+   (Baloo 2 is canvas-only, so force-load it explicitly) */
+Promise.all([
+  document.fonts.ready,
+  document.fonts.load('800 96px "Baloo 2"'),
+  logoLoaded,
+]).then(() => {
+  SHADES.forEach((s, i) => {
+    textures[i].dispose();
+    textures[i] = swirlTexture(s);
+  });
+  if (active >= 0) { bodyMat.map = textures[active]; bodyMat.needsUpdate = true; }
+});
+
+setShade(0, true);
+
+/* ————————————————— resize & loop ————————————————— */
+function resize() {
+  const w = mount.clientWidth, h = mount.clientHeight;
+  renderer.setSize(w, h);
+  camera.aspect = w / h;
+  camera.updateProjectionMatrix();
+}
+new ResizeObserver(resize).observe(mount);
+resize();
+
+/* ————————————————— generative music (WebAudio, no samples) ————————————————— */
+const musicBtn = document.getElementById('musicBtn');
+let music = null;
+
+function makeMusic() {
+  const ctx = new (window.AudioContext || window.webkitAudioContext)();
+  const master = ctx.createGain(); master.gain.value = 0;
+  const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 3600;
+  master.connect(lp); lp.connect(ctx.destination);
+
+  /* dreamy feedback delay */
+  const delay = ctx.createDelay(1); delay.delayTime.value = 0.42;
+  const fb = ctx.createGain(); fb.gain.value = 0.34;
+  const wet = ctx.createGain(); wet.gain.value = 0.4;
+  delay.connect(fb); fb.connect(delay); delay.connect(wet); wet.connect(master);
+
+  /* warm chord loop — Fmaj7 · Am9 · Dm9 · B♭maj7 */
+  const CHORDS = [
+    [174.61, 261.63, 329.63, 440.00],
+    [220.00, 329.63, 392.00, 493.88],
+    [146.83, 220.00, 349.23, 392.00],
+    [116.54, 174.61, 293.66, 440.00],
+  ];
+  const PENTA = [523.25, 587.33, 698.46, 783.99, 880.00, 1046.5];
+  let ci = 0;
+
+  function pad() {
+    const now = ctx.currentTime;
+    CHORDS[ci % CHORDS.length].forEach((f, n) => {
+      const o = ctx.createOscillator(); o.type = 'triangle';
+      o.frequency.value = f * (n === 0 ? 0.5 : 1);         // bass root one octave down
+      o.detune.value = (Math.random() - 0.5) * 9;
+      const g = ctx.createGain();
+      g.gain.setValueAtTime(0, now);
+      g.gain.linearRampToValueAtTime(n === 0 ? 0.05 : 0.032, now + 2.6);
+      g.gain.linearRampToValueAtTime(0, now + 7.6);
+      o.connect(g); g.connect(master); g.connect(delay);
+      o.start(now); o.stop(now + 8);
+    });
+    ci++;
+  }
+
+  function sparkle() {
+    if (Math.random() < 0.45) return;
+    const now = ctx.currentTime;
+    const o = ctx.createOscillator(); o.type = 'sine';
+    o.frequency.value = PENTA[Math.floor(Math.random() * PENTA.length)] * (Math.random() < 0.3 ? 2 : 1);
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0, now);
+    g.gain.linearRampToValueAtTime(0.035, now + 0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001, now + 1.4);
+    o.connect(g); g.connect(delay); g.connect(master);
+    o.start(now); o.stop(now + 1.5);
+  }
+
+  /* ——— POP groove: kick · clap on 2&4 · 8th hats · bass · lead hook ——— */
+  const BPM = 122, SPB = 60 / BPM;
+  const nbuf = ctx.createBuffer(1, ctx.sampleRate * 0.2, ctx.sampleRate);
+  const nd = nbuf.getChannelData(0);
+  for (let i = 0; i < nd.length; i++) nd[i] = Math.random() * 2 - 1;
+
+  function kick(t) {
+    const o = ctx.createOscillator(), g = ctx.createGain();
+    o.frequency.setValueAtTime(140, t);
+    o.frequency.exponentialRampToValueAtTime(45, t + 0.11);
+    g.gain.setValueAtTime(0.55, t);
+    g.gain.exponentialRampToValueAtTime(0.001, t + 0.22);
+    o.connect(g); g.connect(master); o.start(t); o.stop(t + 0.24);
+  }
+  function clap(t) {
+    const s = ctx.createBufferSource(); s.buffer = nbuf;
+    const f = ctx.createBiquadFilter(); f.type = 'bandpass'; f.frequency.value = 1900; f.Q.value = 0.9;
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0.16, t);
+    g.gain.exponentialRampToValueAtTime(0.001, t + 0.18);
+    s.connect(f); f.connect(g); g.connect(master); g.connect(delay);
+    s.start(t); s.stop(t + 0.2);
+  }
+  function hat(t, open = false) {
+    const s = ctx.createBufferSource(); s.buffer = nbuf;
+    const f = ctx.createBiquadFilter(); f.type = 'highpass'; f.frequency.value = 7500;
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(open ? 0.07 : 0.045, t);
+    g.gain.exponentialRampToValueAtTime(0.001, t + (open ? 0.16 : 0.045));
+    s.connect(f); f.connect(g); g.connect(master); s.start(t); s.stop(t + 0.2);
+  }
+  function bass(t, f, len = 0.26) {
+    const o = ctx.createOscillator(); o.type = 'sawtooth'; o.frequency.value = f;
+    const fl = ctx.createBiquadFilter(); fl.type = 'lowpass'; fl.frequency.value = 520;
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0.14, t);
+    g.gain.exponentialRampToValueAtTime(0.001, t + len);
+    o.connect(fl); fl.connect(g); g.connect(master); o.start(t); o.stop(t + len + 0.05);
+  }
+  function lead(t, f, len = 0.22) {
+    const o1 = ctx.createOscillator(); o1.type = 'square';   o1.frequency.value = f; o1.detune.value = -6;
+    const o2 = ctx.createOscillator(); o2.type = 'sawtooth'; o2.frequency.value = f; o2.detune.value = 7;
+    const fl = ctx.createBiquadFilter(); fl.type = 'lowpass'; fl.frequency.value = 2300;
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0, t);
+    g.gain.linearRampToValueAtTime(0.055, t + 0.015);
+    g.gain.exponentialRampToValueAtTime(0.001, t + len);
+    o1.connect(fl); o2.connect(fl); fl.connect(g); g.connect(master); g.connect(delay);
+    o1.start(t); o2.start(t); o1.stop(t + len + 0.05); o2.stop(t + len + 0.05);
+  }
+
+  /* catchy 2-bar hook in F-major pentatonic — [beat, freq] */
+  const HOOK = [
+    [0, 440.00], [0.5, 523.25], [1, 587.33], [2, 523.25], [2.5, 440.00], [3, 392.00], [3.5, 440.00],
+    [4, 523.25], [4.5, 587.33], [5, 698.46], [6, 587.33], [6.5, 523.25], [7, 440.00],
+  ];
+  let barNo = 0;
+
+  function scheduleBar(t) {
+    const root = CHORDS[ci % CHORDS.length][0] * 0.5;
+    for (let b = 0; b < 4; b++) {
+      kick(t + b * SPB);
+      hat(t + b * SPB + SPB / 2, b === 3);                  // 8th hats, open on the turn
+      hat(t + b * SPB);
+      bass(t + b * SPB, root, 0.22);
+      bass(t + b * SPB + SPB * 0.5, root, 0.12);            // bouncy 8th bass
+    }
+    clap(t + 1 * SPB);
+    clap(t + 3 * SPB);                                      // claps on 2 & 4
+    if (barNo % 2 === 0) {                                  // hook every 2 bars
+      HOOK.forEach(([beat, f]) => lead(t + beat * SPB, f));
+    }
+    barNo++;
+  }
+  let nextBar = 0;
+  const grooveInt = setInterval(() => {
+    if (ctx.state !== 'running') return;
+    while (nextBar < ctx.currentTime + 1.0) {
+      if (nextBar < ctx.currentTime) nextBar = ctx.currentTime + 0.05;
+      scheduleBar(nextBar);
+      nextBar += 4 * SPB;
+    }
+  }, 400);
+
+  pad();
+  return {
+    ctx, master, bpm: BPM,
+    padInt: setInterval(pad, 4 * 4 * SPB * 1000),   // chord per 4 bars
+    spkInt: setInterval(sparkle, 700),
+    grooveInt,
+  };
+}
+
+function setMusic(on) {
+  if (!music) music = makeMusic();
+  musicBtn.classList.toggle('playing', on);
+  musicBtn.setAttribute('aria-pressed', on);
+  music.ctx.resume();
+  const t = music.ctx.currentTime;
+  music.master.gain.cancelScheduledValues(t);
+  music.master.gain.linearRampToValueAtTime(on ? 0.8 : 0, t + 1.2);
+}
+musicBtn.addEventListener('click', () => setMusic(!musicBtn.classList.contains('playing')));
+
+/* ————————————————— cinematic 3D intro ————————————————— */
+const cinema = { on: false, t0: 0 };
+const introG = new THREE.Group();
+introG.visible = false;
+scene.add(introG);
+
+const CREAM3D = 0xf3e9df;
+let phReady = null, phSoon = null, phNew = null, arrG = null;
+
+function makePhrase(font, lines, size, y) {
+  const g = new THREE.Group();
+  g.userData.mats = [];
+  lines.forEach((ln, i) => {
+    const geo = new TextGeometry(ln, {
+      font, size, depth: size * 0.22, curveSegments: 8,
+      bevelEnabled: true, bevelThickness: size * 0.025, bevelSize: size * 0.016, bevelSegments: 3,
+    });
+    geo.center();
+    const mat = new THREE.MeshPhysicalMaterial({
+      color: CREAM3D, roughness: 0.18, clearcoat: 1, clearcoatRoughness: 0.1,
+      transparent: true, opacity: 0,
+    });
+    const m = new THREE.Mesh(geo, mat);
+    m.position.y = ((lines.length - 1) / 2 - i) * size * 1.45;
+    g.add(m);
+    g.userData.mats.push(mat);
+  });
+  g.position.y = y;
+  g.visible = false;
+  introG.add(g);
+  return g;
+}
+
+const fontPromise = new FontLoader().loadAsync(
+  'https://cdn.jsdelivr.net/npm/three@0.184.0/examples/fonts/helvetiker_bold.typeface.json'
+).then(font => {
+  phReady = makePhrase(font, ['ARE YOU', 'READY?'], 0.85, 0.35);
+  phSoon  = makePhrase(font, ['SEE OUR', 'COMING SOON'], 0.60, 0.35);
+  phNew   = makePhrase(font, ['NEW ARRIVALS'], 0.58, 1.95);
+
+  /* the real product photos, in the scene */
+  arrG = new THREE.Group();
+  arrG.visible = false;
+  introG.add(arrG);
+  const tl = new THREE.TextureLoader();
+  ['ombre-01.png', 'ombre-02.png', 'ombre-03.png', 'ombre-04.png'].forEach((f, i) => {
+    const t = tl.load(f);
+    t.colorSpace = THREE.SRGBColorSpace;
+    const m = new THREE.Mesh(
+      new THREE.PlaneGeometry(0.76, 2.32),
+      new THREE.MeshBasicMaterial({ map: t, transparent: true, opacity: 0 })
+    );
+    m.position.set((i - 1.5) * 1.08, -0.35, 0);
+    arrG.add(m);
+  });
+});
+
+function startCinema() {
+  cinema.on = true;
+  cinema.t0 = performance.now();
+  document.body.classList.add('cinema');
+  controls.enabled = false;
+  controls.autoRotate = false;
+  product.visible = particles.visible = floor.visible = false;
+  scene.fog = new THREE.Fog(0x0e0b0a, 9, 22);
+  introG.visible = true;
+}
+function endCinema() {
+  cinema.on = false;
+  document.body.classList.remove('cinema');
+  document.body.classList.add('revealed');          // same design language, inside
+  introG.visible = false;
+  scene.fog = null;
+  product.visible = particles.visible = floor.visible = true;
+  controls.enabled = true;
+  camera.position.set(0.7, 0.4, 9.2);
+  controls.target.set(0, -0.05, 0);
+  introT0 = null;                                   // product drop-in
+  idleTimer = setTimeout(() => controls.autoRotate = true, 2500);
+}
+
+/* fade helper: in a→b, hold, out c→d */
+function fadeWindow(t, a, b, c, d) {
+  if (t < a || t > d) return 0;
+  if (t < b) return (t - a) / (b - a);
+  if (t > c) return 1 - (t - c) / (d - c);
+  return 1;
+}
+function drivePhrase(g, o, t) {
+  if (!g) return;
+  g.visible = o > 0.001;
+  g.userData.mats.forEach(m => m.opacity = o);
+  g.rotation.y = Math.sin(t * 0.3) * 0.1;
+}
+
+function driveCinema(now) {
+  const t = (now - cinema.t0) / 1000;
+
+  drivePhrase(phReady, fadeWindow(t, 0.3, 1.3, 3.4, 4.2), t);
+  drivePhrase(phSoon,  fadeWindow(t, 4.4, 5.3, 6.4, 7.2), t + 1.7);
+
+  if (arrG && t >= 7.3) {
+    arrG.visible = true;
+    const out = t > 11.6 ? Math.max(0, 1 - (t - 11.6) / 0.9) : 1;
+    arrG.children.forEach((m, i) => {
+      const k = THREE.MathUtils.clamp((t - 7.4 - i * 0.22) / 0.75, 0, 1);
+      const e = easeOutBack(k);
+      m.material.opacity = k * out;
+      m.position.y = -0.35 + (1 - e) * 3.4;
+      m.rotation.z = (1 - e) * 0.28 * (i % 2 ? 1 : -1);
+    });
+    if (phNew) {
+      const o = Math.min(1, Math.max(0, (t - 7.5) / 0.8)) * out;
+      drivePhrase(phNew, o, t + 3);
+    }
+  }
+
+  /* slow cinematic dolly + drift */
+  camera.position.set(
+    Math.sin(t * 0.16) * 0.85,
+    0.3 + Math.sin(t * 0.11) * 0.18,
+    10.4 - Math.min(2.6, t * 0.24)
+  );
+  camera.lookAt(0, 0.35, 0);
+
+  if (t > 12.6) endCinema();
+}
+
+/* ————————————————— begin screen ————————————————— */
+const begin = document.getElementById('begin');
+const beginBtn = document.getElementById('beginBtn');
+fontPromise.then(() => { beginBtn.disabled = false; beginBtn.textContent = 'Begin'; })
+  .catch(() => { beginBtn.disabled = false; beginBtn.textContent = 'Begin'; });
+
+begin.addEventListener('click', () => {
+  if (beginBtn.disabled || begin.classList.contains('off')) return;
+  begin.classList.add('off');
+  setMusic(true);                  // the one user gesture audio needs
+  startCinema();
+  setTimeout(() => begin.remove(), 1100);
+});
+
+/* click anywhere skips the intro */
+renderer.domElement.addEventListener('pointerdown', () => {
+  if (cinema.on && (performance.now() - cinema.t0) > 1200) endCinema();
+});
+
+window.__viewer = { product, controls, setShade, textures, bodyMat };   // debug/testing hook
+
+/* ————————————————— loop: intro drop, float, parallax ————————————————— */
+let first = true, introT0 = null;
+const easeOutBack = k => 1 + 2.7 * Math.pow(k - 1, 3) + 1.7 * Math.pow(k - 1, 2);
+
+renderer.setAnimationLoop(() => {
+  const now = performance.now();
+
+  /* beat pulse from the live audio clock */
+  const playing = music && musicBtn.classList.contains('playing');
+  let pulse = 0;
+  if (playing) {
+    const spb = 60 / music.bpm;
+    const bp = (music.ctx.currentTime % spb) / spb;
+    pulse = Math.exp(-5 * bp);
+  }
+
+  /* disco orbit */
+  disco.forEach(d => {
+    const a = now * 0.0007 + d.ph;
+    d.L.position.set(Math.cos(a) * 3.6, 1.6 + Math.sin(now * 0.001 + d.ph) * 1.5, Math.sin(a) * 3.6);
+    d.L.intensity += ((playing ? 5 + 11 * pulse : 0) - d.L.intensity) * 0.2;
+  });
+
+  if (cinema.on) {
+    driveCinema(now);                       // manual camera — no controls.update()
+  } else {
+    controls.update();
+    updateParticles(now * 0.001, pulse);
+
+    if (introT0 === null) introT0 = now;
+    const ik = Math.min(1, (now - introT0) / 1500);
+    if (ik < 1) {
+      /* product drop-in with overshoot, spin to rest */
+      const e = easeOutBack(ik);
+      product.position.y = (1 - e) * 4.2;
+      product.scale.setScalar(0.55 + 0.45 * e);
+      product.rotation.y = -0.35 + (1 - e) * Math.PI * 2;
+    } else if (!switching) {
+      product.position.y = Math.sin(now * 0.0009) * 0.04;   // gentle float
+    }
+
+    /* parallax lean */
+    product.rotation.x += (tilt.x - product.rotation.x) * 0.06;
+    product.rotation.z += (tilt.z - product.rotation.z) * 0.06;
+  }
+
+  renderer.render(scene, camera);
+  if (first) { document.getElementById('loader').classList.add('done'); first = false; }
+});
+</script>
+</body>
+</html>
